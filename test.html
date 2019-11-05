@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./static/css/main.css">
+</head>
+
+<body>
+    <!-- 导航栏 [开始] -->
+    <header>
+        <div class="bg-blur"></div>
+        <div class="head">
+            <div class="left-core">
+                <div class="head-item head-left">
+                    <span class="hua"></span>
+                    <a href="/test.html" class="header-i" title="返回首页">花语</a>
+                </div>
+                <div class="head-item head-left">
+                    <a href="/test.html" class="header-btn">首页</a>
+                </div>
+            </div>
+            <div class="right-core">
+                <div class="head-item">
+                    <div class="item-btn">
+                        <button class="login-register-btn" onclick="goTo()">登录&nbsp;/&nbsp;注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 导航栏 [完] -->
+    <!-- body [开始] -->
+    <div class="content">
+        <div class="title">花语，在这里和你相遇</div>
+        <div class="introduce">
+            <div class="bg-blur"></div>
+            <p>在这里你可以成为买到优质花，从而让生活变得更加美好</p>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="搜索想要购买的花">
+            <div class="search-btn" title="搜索"></div>
+        </div>
+        <div class="carousel">
+            <ul>
+                <li class="list list1"><img src="img/spring-fl.PNG" title="春季鲜花" alt="春季鲜花"></li>
+                <li class="list list2"><img src="img/summer-fl.png" title="夏季鲜花" alt="夏季鲜花"></li>
+                <li class="list list3"><img src="img/autumn-fl.png" title="秋季鲜花" alt="秋季鲜花"></li>
+                <li class="list list4"><img src="img/winter-fl.png" title="东季鲜花" alt="冬季鲜花"></li>
+            </ul>
+            <div class="carousel-btn">
+                <span class="orangered"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="carousel-btn">
+                <div id="left-btn">
+                    <svg fill="none" stroke="#eee" stroke-width="1.5" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M35 20 L20 30 L35 40"></path>
+                    </svg>
+                </div>
+                <div id="right-btn">
+                    <svg fill="none" stroke="#eee" stroke-width="1.5" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 20 L40 30 L25 40"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- body [完] -->
+    <div class="curtain" id="curtain" style="display: none;">
+        <!-- 登录页面 [开始] -->
+        <div class="wrap" id="login-wrap" autocomplete="off" style="display: none;">
+            <div class="wrap-body">
+                <i class="close" title="关闭">
+                    <svg fill="none" stroke="#333" stroke-width="2" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0 L13 13 M13 0 L0 13"></path>
+                    </svg>
+                </i>
+                <div class="title">花语</div>
+                <div class="wrap-name">
+                    <div class="line"></div>
+                    <div class="name-item">登录</div>
+                </div>
+                <form action="#" method="POST" class="login">
+                    <input type="text" class="input-item" placeholder="输入用户名或邮箱">
+                    <input type="password" class="input-item" placeholder="输入密码">
+                    <div>
+                        <input type="submit" class="submit" value="登录">
+                    </div>
+                </form>
+                <div class="to-resister go">
+                    <p>尚无账号?&nbsp;<span class="resigter" onclick="gotoResigter()">点击注册</span></p>
+                </div>
+            </div>
+        </div>
+        <!-- 登录页面 [完] -->
+
+        <!-- 注册页面 [开始] -->
+        <div class="wrap" id="register-wrap" style="display: none;">
+            <div class="wrap-body">
+                <i class="close" title="关闭">
+                <svg fill="none" stroke="#333" stroke-width="2" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0 L13 13 M13 0 L0 13"></path>
+                </svg>
+            </i>
+                <div class="title">花语</div>
+                <div class="wrap-name">
+                    <div class="line"></div>
+                    <div class="name-item">注册</div>
+                </div>
+                <form action="#" method="POST" class="form-core" autocomplete="off">
+                    <input type="text" class="input-item" placeholder="昵称">
+                    <input type="password" class="input-item" placeholder="密码(8-16个字符)">
+                    <input type="password" class="input-item" placeholder="确认密码">
+                    <input type="email" class="input-item" placeholder="填入邮箱" required>
+                    <div>
+                        <input type="submit" class="submit" value="注册">
+                    </div>
+                </form>
+                <div class="to-login go">
+                    <p>已有账号?&nbsp;<span class="login" onclick="toLogin()">这里登录</span></p>
+                </div>
+            </div>
+        </div>
+        <!-- 注册页面 [完] -->
+    </div>
+    <script src="static/js/main.js"></script>
+</body>
+
+</html4
