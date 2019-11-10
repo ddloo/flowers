@@ -1,0 +1,6 @@
+<IFModule rewrite_module>
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule api/(.*)/(.*) php/entrance.php?handle=$1&method=$2 [QSA,L]
+</IFModule>

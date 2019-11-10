@@ -7,9 +7,68 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="./static/css/main.css">
+    <style>
+        .global-info {
+            text-align: center;
+            z-index: 999;
+            position: fixed;
+            left: 50%;
+            top: 0;
+            padding: 8px 25px;
+            border-radius: 4px;
+            transition: transform .6s ease-out;
+            transform: translate(-50%, -120%);
+        }
+        
+        .error {
+            background-color: #fef0f0;
+            border: 1px solid #fde2e2;
+            box-shadow: 0 0 8px 1px #fde2e2;
+        }
+        
+        .success {
+            background-color: #f0f9eb;
+            border: 1px solid #e1f3d8;
+            box-shadow: 0 0 8px 1px #d1f1c1;
+        }
+        
+        .global-appear {
+            transform: translate(-50%, 150%);
+        }
+        
+        .error {
+            color: #f56c6c;
+        }
+        
+        .success {
+            color: #6ec44c;
+        }
+        
+        .global-info .icon {
+            vertical-align: -9%;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .error .icon {
+            background-color: #ff6868;
+        }
+        
+        .success .icon {
+            background-color: #7be247;
+        }
+        
+        .global-info #error-info {
+            margin-left: 5px;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- 显示信息 -->
+    <div id="message"></div>
     <!-- 导航栏 [开始] -->
     <header>
         <div class="bg-blur"></div>
@@ -17,16 +76,16 @@
             <div class="left-core">
                 <div class="head-item head-left">
                     <span class="hua"></span>
-                    <a href="/test.html" class="header-i" title="返回首页">花语</a>
+                    <a href="./test.html" class="header-i" title="返回首页">花语</a>
                 </div>
                 <div class="head-item head-left">
-                    <a href="/test.html" class="header-btn">首页</a>
+                    <a href="./test.html" class="header-btn">首页</a>
                 </div>
             </div>
             <div class="right-core">
                 <div class="head-item">
                     <div class="item-btn">
-                        <button class="login-register-btn" onclick="goTo()">登录&nbsp;/&nbsp;注册</button>
+                        <button class="login-register-btn">登录&nbsp;/&nbsp;注册</button>
                     </div>
                 </div>
             </div>
@@ -74,7 +133,7 @@
     <!-- body [完] -->
     <div class="curtain" id="curtain" style="display: none;">
         <!-- 登录页面 [开始] -->
-        <div class="wrap" id="login-wrap" autocomplete="off" style="display: none;">
+        <div class="wrap" id="login-wrap" style="display: none;">
             <div class="wrap-body">
                 <i class="close" title="关闭">
                     <svg fill="none" stroke="#333" stroke-width="2" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -86,15 +145,16 @@
                     <div class="line"></div>
                     <div class="name-item">登录</div>
                 </div>
-                <form action="#" method="POST" class="login">
-                    <input type="text" class="input-item" placeholder="输入用户名或邮箱">
-                    <input type="password" class="input-item" placeholder="输入密码">
+                <div class="error-info" id="lg-error"></div>
+                <div class="login form-core">
+                    <input type="text" class="input-item" id="login-keyword" placeholder="输入用户名或邮箱">
+                    <input type="password" class="input-item" id="login-password" placeholder="输入密码">
                     <div>
-                        <input type="submit" class="submit" value="登录">
+                        <button class="submit" id="login-btn">登录</button>
                     </div>
-                </form>
+                </div>
                 <div class="to-resister go">
-                    <p>尚无账号?&nbsp;<span class="resigter" onclick="gotoResigter()">点击注册</span></p>
+                    <p>尚无账号?&nbsp;<span class="toResigter">点击注册</span></p>
                 </div>
             </div>
         </div>
@@ -104,32 +164,369 @@
         <div class="wrap" id="register-wrap" style="display: none;">
             <div class="wrap-body">
                 <i class="close" title="关闭">
-                <svg fill="none" stroke="#333" stroke-width="2" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0 L13 13 M13 0 L0 13"></path>
-                </svg>
-            </i>
+                    <svg fill="none" stroke="#333" stroke-width="2" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0 L13 13 M13 0 L0 13"></path>
+                    </svg>
+                </i>
                 <div class="title">花语</div>
                 <div class="wrap-name">
                     <div class="line"></div>
                     <div class="name-item">注册</div>
                 </div>
-                <form action="#" method="POST" class="form-core" autocomplete="off">
-                    <input type="text" class="input-item" placeholder="昵称">
-                    <input type="password" class="input-item" placeholder="密码(8-16个字符)">
-                    <input type="password" class="input-item" placeholder="确认密码">
-                    <input type="email" class="input-item" placeholder="填入邮箱" required>
+                <div class="error-info" id="rg-error"></div>
+                <div class="form-core">
+                    <input type="text" class="input-item" name="username" id="register-username" placeholder="昵称">
+                    <input type="password" class="input-item" name="password" id="register-password" placeholder="密码(8-16个字符)">
+                    <input type="password" class="input-item" id="register-repassword" placeholder="确认密码">
+                    <input type="email" class="input-item" name="email" id="register-email" placeholder="填入邮箱">
                     <div>
-                        <input type="submit" class="submit" value="注册">
+                        <button class="submit" id="register-btn">注册</button>
                     </div>
-                </form>
+                </div>
                 <div class="to-login go">
-                    <p>已有账号?&nbsp;<span class="login" onclick="toLogin()">这里登录</span></p>
+                    <p>已有账号?&nbsp;<span class="toLogin">这里登录</span></p>
                 </div>
             </div>
         </div>
         <!-- 注册页面 [完] -->
     </div>
-    <script src="static/js/main.js"></script>
+    <script src="static/js/qs.js"></script>
+    <!-- <script src="static/js/main.js"></script> -->
+    <script src="static/js/axios.js"></script>
+    <script>
+        let body = document.getElementById("message");
+        //注册
+        let registerBtnEle = document.getElementById('register-btn');
+        let registerUsername = document.getElementById('register-username');
+        let registerPassword = document.getElementById('register-password');
+        let registerRePassword = document.getElementById('register-repassword');
+        let registerEmail = document.getElementById('register-email');
+        //登录
+        let loginBtnEle = document.getElementById('login-btn');
+        let loginWord = document.getElementById('login-keyword');
+        let loginPassword = document.getElementById('login-password');
+
+        //登录按钮
+        loginBtnEle.onclick = function(){
+            let word = loginWord.value;
+            let password = loginPassword.value;
+            //正则表达式判断用户输入邮箱还是用户名
+            let regEmail = /^\w{3,}@\w{2,5}\.[a-zA-Z]{1,6}$/;
+            let isUsername;
+            if(word.trim() === ""){
+                showMessageInfo("error", "用户名或邮箱为空呢");
+                return;
+            }
+            if (password.trim() === "") {
+                showMessageInfo("error", "密码不能空啦");
+                return;
+            }
+            if(regEmail.test(word)){
+                isUsername = false;
+            }
+            else{
+                isUsername = true;
+            }
+            console.log(word);
+            console.log(isUsername);
+            axios({
+                method: "POST",
+                url: "api/UserHandle/auth",
+                data: Qs.stringify({
+                    keyword: word,
+                    password,
+                    isUsername
+                })
+            }).then(response => {
+                    console.log(response.data);
+                    if (response.data.code !== "0000") {
+                        showMessageInfo("error", response.data.msg);
+                        return;
+                    }
+                    curtainEle.style.display = "none";
+                    showMessageInfo("success", "登录成功");
+                })
+        }
+        //注册按钮
+        registerBtnEle.onclick = function() {
+            let username = registerUsername.value;
+            let password = registerPassword.value;
+            let rePassword = registerRePassword.value;
+            let email = registerEmail.value;
+            if (username.trim() === "") {
+                showMessageInfo("error", "昵称为空呢");
+                return;
+            }
+            if (password.trim() === "") {
+                showMessageInfo("error", "密码不能空啦");
+                return;
+            }
+            if (rePassword.trim() === "") {
+                showMessageInfo("error", "确认密码什么都还没有");
+                return;
+            }
+            if (email.trim() === "") {
+                showMessageInfo("error", "邮箱还没填呢");
+                return;
+            }
+            if (password !== rePassword) {
+                showMessageInfo("error", "密码不一致~");
+                return;
+            }
+            axios({
+                    method: 'post',
+                    url: 'api/UserHandle/register',
+                    data: Qs.stringify({
+                        username,
+                        password,
+                        email
+                    })
+                })
+                .then(response => {
+                    if (response.data.code !== "0000") {
+                        showMessageInfo("error", response.data.msg);
+                        return;
+                    }
+                    curtainEle.style.display = "none";
+                    showMessageInfo("success", "注册成功");
+                })
+        }
+
+        //添加消息显示节点 
+        function createMessage(type, message) {
+            if (type === "success") {
+                let divMessage = '<div class="global-info success global-appear">\
+                            <span class="icon">\
+                                <svg fill="none" stroke="#fff" stroke-width="1" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">\
+                                    <path d="M4 8 L7 11 L12 5"></path>\
+                                </svg>\
+                            </span>\
+                            <span id="error-info" class="error-info">' + message + '</span>\
+                        </div>'
+                body.innerHTML += divMessage;
+            } else if (type === "error") {
+                let divMessage = '<div class="global-info">\
+                            <span class="icon">\
+                                <svg fill="none" stroke="#fff" stroke-width="1" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">\
+                                    <path d="M5 5 L11 11 M11 5 L5 11"></path>\
+                                </svg>\
+                            </span>\
+                            <span id="error-info" class="error-info">' + message + '</span>\
+                            </div>'
+                body.innerHTML += divMessage;
+            }
+        }
+
+        function showMessageInfo(type, message) {
+            type = type || 'error';
+            message = message || '什么都没有哦';
+            createMessage(type, message);
+            let globalDivEle = document.getElementsByClassName('global-info');
+            let i = globalDivEle.length - 1;
+            if (type === "success") {
+                //消息显示框
+                globalDivEle[i].className = "global-info success";
+                setTimeout(() => {
+                    globalDivEle[globalDivEle.length - 1].classList.add("global-appear");
+                }, 100)
+                setTimeout(() => {
+                    globalDivEle[globalDivEle.length - 1].className = "global-info success";
+                }, 2500)
+                setTimeout(() => {
+                    globalDivEle[globalDivEle.length - 1].remove();
+                }, 3500)
+            } else if (type === "error") {
+                //消息显示框
+                // let globalDivEle = document.getElementsByClassName('global-info');
+                // let i = globalDivEle.length - 1;
+                globalDivEle[i].className = "global-info error";
+                setTimeout(() => {
+                    globalDivEle[globalDivEle.length - 1].classList.add("global-appear");
+                }, 100)
+                setTimeout(() => {
+                    globalDivEle[globalDivEle.length - 1].className = "global-info error";
+                }, 2500)
+                setTimeout(() => {
+                    globalDivEle[globalDivEle.length - 1].remove();
+                }, 3500)
+            }
+        }
+        let imgListEle = document.getElementsByClassName("list");
+        let btnListEle = document.getElementsByClassName("carousel-btn")[0].children;
+        let imgLength = btnListEle.length;
+        let leftBtnEle = document.getElementById("left-btn");
+        let rightBtnEle = document.getElementById("right-btn");
+        
+    //默认第一张为当前图片
+    let currentImg = 0;
+    for (let i = 0; i < imgLength; i++) {
+        btnListEle[i].onclick = ((i) => {
+            return function() {
+                currentImg = i;
+                for (let j = 0; j < imgLength; j++) {
+                    moveImg(j);
+                }
+            }
+        })(i)
+    }
+    
+        function moveImg(j) {
+            switch (currentImg) {
+                case j:
+                    imgListEle[j].className = "list list1";
+                    break;
+                    case (j - 1 + imgLength) % imgLength:
+                        imgListEle[j].className = "list list4";
+                        break;
+                        case (j + 1) % imgLength:
+                            imgListEle[j].className = "list list2";
+                            break;
+                            default:
+                                imgListEle[j].className = "list list3";
+                                break;
+                            }
+                            //移动图片时,改变按钮颜色
+                            setBtnColor();
+                        }
+                        
+                        function setBtnColor() {
+        for (let i = 0; i < imgLength; i++) {
+            btnListEle[i].classList.remove('orangered');
+        }
+        btnListEle[currentImg].classList.add('orangered');
+    }
+        /**
+         *   按下左右两侧按钮,图片移动事件
+         *   @param dir 按下左边按钮还是右边按钮
+         */
+        function left_right_btn(dir) {
+            return function() {
+                if (dir === 'left') {
+                    currentImg--;
+                    if (currentImg < 0) {
+                        currentImg = 3;
+                    }
+                    for (let i = 0; i < imgLength; i++) {
+                        moveImg(i);
+                    }
+                } else if (dir === "right") {
+                    currentImg++;
+                    if (currentImg >= imgLength) {
+                        currentImg = 0;
+                    }
+                    for (let i = 0; i < imgLength; i++) {
+                    moveImg(i);
+                }
+            }
+        }
+    }
+    leftBtnEle.onclick = left_right_btn('left');
+    rightBtnEle.onclick = left_right_btn('right');
+    
+    let curtainEle = document.getElementById('curtain');
+    let loginWrap = document.getElementById('login-wrap');
+    let registerWrap = document.getElementById('register-wrap');
+    let closeCurtainBtn = document.getElementsByClassName('close');
+    let wrapEle = document.getElementsByClassName('wrap');
+    let formEle = document.getElementsByClassName('form-core');
+    let loginRegisterBtn = document.getElementsByClassName("login-register-btn")[0];
+    let goResigterBtn = document.getElementsByClassName("toResigter")[0];
+    let goLoginBtn = document.getElementsByClassName("toLogin")[0];
+
+    loginRegisterBtn.addEventListener("click", function(){
+        goTo();
+    })
+    goResigterBtn.addEventListener("click", function(){
+        gotoResigter();
+    })
+    goLoginBtn.addEventListener("click", function(){
+        toLogin();
+    })
+    function goTo() {
+        curtain.style.display = "";
+        goToLogin();
+        }
+        //点击 登录/注册 按钮
+        function goToLogin() {
+        loginWrap.classList.add('appearLogin');
+        loginWrap.style.display = "";
+        registerWrap.style.display = "none";
+        setTimeout(() => {
+            loginWrap.classList.remove('appearLogin');
+        }, 700)
+        }
+
+        //点击 前往注册 按钮
+        function gotoResigter() {
+        setTimeout(() => {
+            registerWrap.style.display = "";
+            registerWrap.classList.add('appearRegister');
+        }, 700)
+        setTimeout(() => {
+            registerWrap.classList.remove('appearRegister');
+        }, 1400)
+        loginDisappear();
+        }
+
+        //登录界面消失
+        function loginDisappear() {
+        loginWrap.classList.add('disappearLogin');
+        setTimeout(() => {
+            loginWrap.style.display = "none";
+            loginWrap.classList.remove('disappearLogin');
+        }, 700)
+        }
+
+        //注册界面消失
+        function registerDisappear() {
+        registerWrap.classList.add('disappearRegister');
+        setTimeout(() => {
+            registerWrap.style.display = "none";
+            registerWrap.classList.remove('disappearRegister');
+        }, 700)
+        }
+
+        //点击 前往登录 按钮
+        function toLogin() {
+        registerDisappear();
+        setTimeout(() => {
+            goToLogin();
+        }, 700)
+        }
+
+        //关闭 登录/注册 界面
+        for (let i = 0; i < closeCurtainBtn.length; i++) {
+        closeCurtainBtn[i].onclick = () => {
+            console.log("11");
+            curtainEle.style.display = "none";
+            clearInfo();
+        }
+        }
+
+        //点击 登录注册 界面外的地方时 登录界面消失
+        curtainEle.onclick = () => {
+        curtainEle.style.display = "none";
+        clearInfo();
+        }
+
+        for (let i = 0; i < wrapEle.length; i++) {
+        wrapEle[i].onclick = (event) => {
+            //子元素阻止父元素的onclick冒泡事件
+            event.stopPropagation();
+        }
+        }
+
+        //登录/注册页面填过的信息消除
+        function clearInfo() {
+        for (let i = 0; i < formEle.length; i++) {
+            let inputEle = formEle[i].getElementsByTagName("input");
+            //最后的 input type=submit不用清除值
+            for (let j = 0; j < inputEle.length; j++) {
+                inputEle[j].value = "";
+            }
+        }
+    }
+    </script>
 </body>
 
-</html4
+</html>

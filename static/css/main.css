@@ -40,6 +40,12 @@ input {
     outline: none;
 }
 
+input::placeholder{
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
 .bg-blur {
     position: absolute;
     background-image: url('../../img/sd-bg.png');
@@ -347,7 +353,7 @@ input {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 99;
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, .5);
@@ -420,6 +426,11 @@ input {
     }
 }
 
+.curtain .wrap .error-info {
+    margin-bottom: 15px;
+    color: #fc3d3d;
+}
+
 .curtain .wrap-body {
     padding: 20px 15px;
     font-size: 15px;
@@ -432,7 +443,7 @@ input {
 
 .curtain .wrap-name {
     position: relative;
-    margin: 30px 0;
+    margin: 20px 0;
     color: #999;
 }
 

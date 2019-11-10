@@ -74,7 +74,7 @@ let loginWrap = document.getElementById('login-wrap');
 let registerWrap = document.getElementById('register-wrap');
 let closeCurtainBtn = document.getElementsByClassName('close');
 let wrapEle = document.getElementsByClassName('wrap');
-let formEle = document.getElementsByTagName('form');
+let formEle = document.getElementsByClassName('form-core');
 
 function goTo() {
     curtain.style.display = "";
@@ -131,6 +131,7 @@ function toLogin() {
 //关闭 登录/注册 界面
 for (let i = 0; i < closeCurtainBtn.length; i++) {
     closeCurtainBtn[i].onclick = () => {
+        console.log("11");
         curtainEle.style.display = "none";
         clearInfo();
     }
@@ -151,10 +152,12 @@ for (let i = 0; i < wrapEle.length; i++) {
 
 //登录/注册页面填过的信息消除
 function clearInfo() {
+    registerError.innerText = "";
+    loginError.innerText = "";
     for (let i = 0; i < formEle.length; i++) {
         let inputEle = formEle[i].getElementsByTagName("input");
         //最后的 input type=submit不用清除值
-        for (let j = 0; j < inputEle.length - 1; j++) {
+        for (let j = 0; j < inputEle.length; j++) {
             inputEle[j].value = "";
         }
     }

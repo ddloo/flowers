@@ -19,7 +19,7 @@
 
         //判断邮箱是否存在
         public function emailIsExist($email){
-            $result = $this->query('select `$email` from `user` where `$email` = "'.$email.'"');
+            $result = $this->query('select `email` from `user` where `email` = "'.$email.'"');
             if($result->num_rows === 0){
                 //用户不存在
                 return 0;
@@ -31,7 +31,8 @@
         public function auth($keyword, $password, $isUsername){
             $userExist = NULL;
             $type = NULL;
-            if($isUsername){
+            // die(var_dump($isUsername));
+            if($isUsername === "true"){
                 $userExist = $this->usernameIsExist($keyword);
                 if($userExist === 0){
                     //用户名不存在
@@ -43,7 +44,7 @@
                 $userExist = $this->emailIsExist($keyword);
                 if($userExist === 0){
                     //邮箱不存在
-                    return 0;
+                    return 1;
                 }
                 $type = 'email';
             }

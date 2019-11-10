@@ -8,3 +8,10 @@
         public static $password = "";
         public static $base = __DIR__;
     }
+
+    $handle = $_GET['handle'];
+    $method = $_GET['method'];
+
+    include_once(app::$base."/Handle/".$handle.".php");
+
+    $method();
